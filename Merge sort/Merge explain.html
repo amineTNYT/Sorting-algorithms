@@ -1,191 +1,659 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tri Fusion - Merge Sort</title>
+<title>Tri Fusion - Animation Éducative</title>
 <style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #0f172a;
-    color: #e2e8f0;
-    text-align: center;
-    padding: 20px;
-    min-height: 100vh;
-    margin: 0;
-  }
-  h1 { color: #f1f5f9; margin-bottom: 30px; }
-  .controls {
-    margin: 20px 0;
-  }
-  button {
-    padding: 12px 24px;
-    margin: 0 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #3b82f6;
-    color: white;
-  }
-  button:hover:not(:disabled) { background: #2563eb; }
-  button:disabled { background: #475569; cursor: not-allowed; }
-  #array {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 40px 0;
-    flex-wrap: wrap;
-  }
-  .bar {
-    width: 60px;
-    padding: 10px 0;
-    background: #475569;
-    color: white;
-    font-weight: bold;
-    border-radius: 6px;
-    transition: all 0.5s;
-  }
-  .left { background: #3b82f6; }
-  .right { background: #8b5cf6; }
-  .comparing { background: #fbbf24; transform: scale(1.1); }
-  .merging { background: #ef4444; animation: pulse 0.8s infinite; }
-  .sorted { background: #10b981; }
-  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-  #info { margin: 30px; font-size: 18px; }
-  .watermark {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(15,23,42,0.9);
-    padding: 12px 24px;
-    border-radius: 8px;
-    border: 2px solid #10b981;
-    color: white;
-    font-weight: bold;
-  }
-  .watermark a { color: #10b981; text-decoration: none; }
-  .watermark a:hover { color: #34d399; }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #e2e8f0; /* Texte clair sur fond sombre */
+        padding: 20px;
+        padding-bottom: 100px;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    h1 { 
+        text-align: center;
+        color: #f1f5f9; /* Blanc cassé */
+        margin-bottom: 30px;
+        font-size: 36px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .control-panel {
+        background: rgba(30, 41, 59, 0.8); /* Fond sombre transparent */
+        padding: 25px;
+        border-radius: 12px; /* Arrondi plus prononcé */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Ombre plus prononcée */
+        margin-bottom: 30px;
+        border: 1px solid #334155; /* Bordure subtile */
+        backdrop-filter: blur(10px); /* Effet de flou */
+    }
+
+    .buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px; /* Arrondi plus prononcé */
+        transition: all 0.3s;
+        color: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    #startBtn {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+    #startBtn:hover:not(:disabled) {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    #generateBtn {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    #generateBtn:hover:not(:disabled) {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+    }
+
+    #speedBtn {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+    #speedBtn:hover:not(:disabled) {
+        background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    }
+
+    button:disabled {
+        background: #475569;
+        cursor: not-allowed;
+        opacity: 0.6;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    .array-display {
+        background: rgba(15, 23, 42, 0.7); /* Fond très sombre */
+        padding: 40px 20px;
+        border-radius: 12px;
+        box-shadow: 
+            0 4px 20px rgba(0,0,0,0.5),
+            inset 0 1px 0 rgba(255,255,255,0.1);
+        margin-bottom: 30px;
+        min-height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border: 1px solid #334155;
+    }
+
+    .array-container {
+        display: flex;
+        gap: 15px;
+        align-items: flex-end;
+    }
+
+    .array-element {
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: all 0.4s ease;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        color: white; /* Toujours blanc pour meilleur contraste */
+        position: relative;
+        border: 2px solid transparent;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .default {
+        background: linear-gradient(135deg, #475569 0%, #334155 100%);
+        border-color: #64748b;
+    }
+
+    .dividing {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-color: #f59e0b;
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+
+    .left-half {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-color: #3b82f6;
+        box-shadow: 0 3px 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .right-half {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        border-color: #8b5cf6;
+        box-shadow: 0 3px 15px rgba(139, 92, 246, 0.4);
+    }
+
+    .comparing {
+        background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+        border-color: #f59e0b;
+        transform: scale(1.15);
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        color: #1a1a1a; /* Texte sombre sur fond jaune */
+    }
+
+    .merging {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        border-color: #ef4444;
+        transform: scale(1.2);
+        animation: pulse 1s infinite;
+        box-shadow: 0 4px 20px rgba(239, 68, 68, 0.5);
+        color: white;
+    }
+
+    .merged {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-color: #10b981;
+        box-shadow: 0 3px 15px rgba(16, 185, 129, 0.4);
+        color: white;
+    }
+
+    .sorted {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-color: #10b981;
+        box-shadow: 0 3px 15px rgba(16, 185, 129, 0.4);
+        color: white;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1.1); box-shadow: 0 3px 15px rgba(239, 68, 68, 0.4); }
+        50% { transform: scale(1.25); box-shadow: 0 5px 25px rgba(239, 68, 68, 0.6); }
+        100% { transform: scale(1.1); box-shadow: 0 3px 15px rgba(239, 68, 68, 0.4); }
+    }
+
+    .arrow {
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 32px;
+        color: #fca5a5; /* Rouge clair pour mieux ressortir */
+        animation: bounce 1.5s infinite;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.7));
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    #steps {
+        margin: 30px 10px;
+        max-width: 95%;
+        font-size: 18px;
+        min-height: 80px;
+        padding: 20px;
+        background: rgba(30, 41, 59, 0.8);
+        border-radius: 12px;
+        color: #e2e8f0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        line-height: 1.6;
+        border: 1px solid #334155;
+        backdrop-filter: blur(10px);
+    }
+
+    .status-panel {
+        background: rgba(30, 41, 59, 0.8);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        margin-bottom: 30px;
+        border: 1px solid #334155;
+        backdrop-filter: blur(10px);
+    }
+
+    .status-panel h3 {
+        color: #f1f5f9;
+        margin-bottom: 15px;
+        font-size: 20px;
+        text-align: center;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .status-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        background: rgba(15, 23, 42, 0.6);
+        padding: 12px;
+        border-radius: 8px;
+        border-left: 4px solid #3b82f6;
+        text-align: center;
+        transition: all 0.3s;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .info-item:hover {
+        transform: translateY(-2px);
+        background: rgba(15, 23, 42, 0.8);
+        border-left: 4px solid #60a5fa;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    .info-value {
+        font-size: 24px;
+        color: #f1f5f9;
+        font-weight: bold;
+        margin-top: 5px;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .code-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .code-block {
+        background: #0f172a; /* Fond plus sombre */
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 
+            0 4px 20px rgba(0,0,0,0.5),
+            inset 0 1px 0 rgba(255,255,255,0.1);
+        border: 1px solid #334155;
+        transition: all 0.3s;
+    }
+
+    .code-block:hover {
+        transform: translateY(-5px);
+        box-shadow: 
+            0 8px 30px rgba(0,0,0,0.6),
+            inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .code-block h3 {
+        color: #fbbf24; /* Jaune doré */
+        margin-bottom: 20px;
+        font-size: 20px;
+        text-align: center;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .code-block pre {
+        color: #e2e8f0;
+        font-family: 'Courier New', monospace;
+        font-size: 15px;
+        line-height: 1.6;
+        overflow-x: auto;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* Syntax highlighting colors */
+    .keyword { color: #c084fc; font-weight: bold; text-shadow: 0 0 5px rgba(192, 132, 252, 0.3); }
+    .function { color: #60a5fa; }
+    .string { color: #34d399; }
+    .comment { color: #94a3b8; font-style: italic; }
+    .number { color: #fbbf24; }
+    .variable { color: #f472b6; }
+    .operator { color: #fb923c; }
+
+    .tdol-table {
+        background: rgba(30, 41, 59, 0.8);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        margin-bottom: 30px;
+        border: 1px solid #334155;
+        backdrop-filter: blur(10px);
+    }
+
+    .tdol-table h3 {
+        color: #f1f5f9;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 22px;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #475569;
+    }
+
+    th {
+        background: rgba(15, 23, 42, 0.8);
+        color: #f1f5f9;
+        font-weight: 600;
+        border-top: 2px solid #3b82f6;
+    }
+
+    td {
+        background: rgba(15, 23, 42, 0.5);
+        color: #e2e8f0;
+    }
+
+    tr:hover td {
+        background: rgba(30, 41, 59, 0.8);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .watermark {
+        position: fixed;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        z-index: 1000;
+        box-shadow: 
+            0 4px 25px rgba(0,0,0,0.5),
+            0 0 20px rgba(16, 185, 129, 0.3);
+        border: 2px solid #10b981;
+        animation: watermarkFloat 4s infinite ease-in-out;
+        transition: all 0.3s;
+        backdrop-filter: blur(10px);
+    }
+
+    .watermark:hover {
+        animation-play-state: paused;
+        transform: translateX(-50%) scale(1.05);
+        border-color: #34d399;
+        box-shadow: 
+            0 6px 30px rgba(0,0,0,0.6),
+            0 0 25px rgba(52, 211, 153, 0.5);
+    }
+
+    .watermark a {
+        color: #10b981;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s;
+        animation: linkPulse 2s infinite;
+        text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+    }
+
+    .watermark a:hover {
+        color: #ffffff;
+        text-shadow: 0 0 10px #10b981;
+        animation: none;
+    }
+
+    @keyframes watermarkFloat {
+        0%, 100% {
+            transform: translateX(-50%) translateY(0);
+        }
+        50% {
+            transform: translateX(-50%) translateY(-5px);
+        }
+    }
+
+    @keyframes linkPulse {
+        0%, 100% {
+            color: #10b981;
+            text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+        }
+        50% {
+            color: #34d399;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .code-section {
+            grid-template-columns: 1fr;
+        }
+        
+        .array-element {
+            width: 55px;
+            height: 55px;
+            font-size: 20px;
+        }
+        
+        h1 {
+            font-size: 28px;
+        }
+        
+        .watermark {
+            font-size: 14px;
+            padding: 12px 20px;
+        }
+        
+        .arrow {
+            top: -35px;
+            font-size: 28px;
+        }
+        
+        body {
+            padding: 15px;
+            padding-bottom: 80px;
+        }
+    }
 </style>
 </head>
 <body>
 
-<h1>Tri Fusion (Merge Sort)</h1>
+<div class="container">
+    <h1>Tri Fusion (Merge Sort)</h1>
 
-<div class="controls">
-  <button id="start">Démarrer</button>
-  <button id="random">Nouveau Tableau</button>
-  <button id="speed">Vitesse ×1</button>
+    <div class="control-panel">
+        <div class="buttons">
+            <button id="startBtn">Démarrer l'Animation</button>
+            <button id="generateBtn">Générer Nouvel Exemple</button>
+            <button id="speedBtn">Vitesse: Lent (×1)</button>
+        </div>
+    </div>
+
+    <div class="array-display">
+        <div class="array-container" id="arrayContainer"></div>
+    </div>
+
+    <div id="steps">Cliquez sur le bouton pour commencer l'animation.</div>
+
+    <div class="status-panel">
+        <h3>État de l'Animation</h3>
+        <div class="status-info">
+            <div class="info-item">
+                <div class="info-label">Profondeur Actuelle</div>
+                <div class="info-value" id="currentDepth">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Profondeur Max</div>
+                <div class="info-value" id="maxDepth">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Comparaisons</div>
+                <div class="info-value" id="comparisons">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Copies</div>
+                <div class="info-value" id="copies">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="code-section">
+        <div class="code-block">
+            <h3>📋 Algorithme du Tri Fusion</h3>
+            <pre><span class="keyword">procédure</span> <span class="function">tri_fusion</span> (tableau)
+<span class="keyword">Début</span>
+    <span class="keyword">si</span> longueur(tableau) &lt;= <span class="number">1</span> <span class="keyword">alors</span>
+        <span class="keyword">retourner</span>  <span class="comment">// déjà trié</span>
+    milieu = longueur // <span class="number">2</span>
+    gauche = tableau[<span class="number">0</span> : milieu]
+    droite = tableau[milieu : fin]
+    <span class="function">tri_fusion</span>(gauche)
+    <span class="function">tri_fusion</span>(droite)
+    <span class="function">fusion</span>(tableau, gauche, droite)
+<span class="keyword">Fin</span>
+
+<span class="keyword">procédure</span> <span class="function">fusion</span> (tableau, gauche, droite)
+<span class="keyword">Début</span>
+    i, j, k = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>
+    <span class="keyword">tant que</span> i &lt; longueur(gauche) <span class="keyword">et</span> j &lt; longueur(droite) :
+        <span class="keyword">si</span> gauche[i] &lt; droite[j] <span class="keyword">alors</span>
+            tableau[k] = gauche[i]
+            i = i + <span class="number">1</span>
+        <span class="keyword">sinon</span>
+            tableau[k] = droite[j]
+            j = j + <span class="number">1</span>
+        k = k + <span class="number">1</span>
+    
+    <span class="comment">// Ajouter les éléments restants</span>
+    <span class="keyword">tant que</span> i &lt; longueur(gauche) :
+        tableau[k] = gauche[i]
+        i = i + <span class="number">1</span>
+        k = k + <span class="number">1</span>
+    
+    <span class="keyword">tant que</span> j &lt; longueur(droite) :
+        tableau[k] = droite[j]
+        j = j + <span class="number">1</span>
+        k = k + <span class="number">1</span>
+<span class="keyword">Fin</span></pre>
+        </div>
+
+        <div class="code-block">
+            <h3>🐍 Implémentation Python</h3>
+            <pre><span class="keyword">def</span> <span class="function">tri_fusion</span>(tableau):
+    <span class="keyword">if</span> <span class="function">len</span>(tableau) &lt;= <span class="number">1</span>:
+        <span class="keyword">return</span>
+    mid = <span class="function">len</span>(tableau) // <span class="number">2</span>
+    gauche = tableau[:mid]
+    droite = tableau[mid:]
+    <span class="function">tri_fusion</span>(gauche)
+    <span class="function">tri_fusion</span>(droite)
+    
+    i = j = k = <span class="number">0</span>
+    <span class="keyword">while</span> i &lt; <span class="function">len</span>(gauche) <span class="keyword">and</span> j &lt; <span class="function">len</span>(droite):
+        <span class="keyword">if</span> gauche[i] &lt; droite[j]:
+            tableau[k] = gauche[i]
+            i += <span class="number">1</span>
+        <span class="keyword">else</span>:
+            tableau[k] = droite[j]
+            j += <span class="number">1</span>
+        k += <span class="number">1</span>
+    
+    <span class="keyword">while</span> i &lt; <span class="function">len</span>(gauche):
+        tableau[k] = gauche[i]
+        i += <span class="number">1</span>
+        k += <span class="number">1</span>
+    
+    <span class="keyword">while</span> j &lt; <span class="function">len</span>(droite):
+        tableau[k] = droite[j]
+        j += <span class="number">1</span>
+        k += <span class="number">1</span>
+
+<span class="comment"># Exemple d'utilisation</span>
+T = [<span class="number">8</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">1</span>]
+<span class="function">tri_fusion</span>(T)
+<span class="function">print</span>(T)  <span class="comment"># [1, 2, 3, 4, 5, 6, 7, 8]</span></pre>
+        </div>
+    </div>
+
+    <div class="tdol-table">
+        <h3>📊 Tableau TDOL </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Objet</th>
+                    <th>Nature / Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>gauche</strong></td>
+                    <td>Tableau d'entiers</td>
+                </tr>
+                <tr>
+                    <td><strong>droite</strong></td>
+                    <td>Tableau d'entiers</td>
+                </tr>
+                <tr>
+                    <td><strong>milieu , i , j ,k</strong></td>
+                    <td>Entier</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<div id="array"></div>
-<div id="info">Cliquez sur "Nouveau Tableau" puis "Démarrer" pour voir l'animation.</div>
-
 <div class="watermark">
-  Par <strong>Amine</strong> — <a href="https://github.com/amineTNYT" target="_blank">@amineTNYT</a>
+    Créé par <strong>Amine</strong> | GitHub: <a href="https://github.com/AmineTNYT" target="_blank">@AmineTNYT</a>
 </div>
 
 <script>
+const arrayContainer = document.getElementById('arrayContainer');
+const startBtn = document.getElementById('startBtn');
+const generateBtn = document.getElementById('generateBtn');
+const speedBtn = document.getElementById('speedBtn');
+const stepsDiv = document.getElementById('steps');
+const currentDepth = document.getElementById('currentDepth');
+const maxDepth = document.getElementById('maxDepth');
+const comparisons = document.getElementById('comparisons');
+const copies = document.getElementById('copies');
+
 let arr = [];
-let speed = 1000;
-const arrayDiv = document.getElementById('array');
-const info = document.getElementById('info');
+let isAnimating = false;
+let totalComparisons = 0;
+let totalCopies = 0;
+let currentDepthValue = 0;
+let maxDepthValue = 0;
 
-document.getElementById('speed').onclick = () => {
-  if (speed === 1000) { speed = 500; this.textContent = 'Vitesse ×2'; }
-  else if (speed === 500) { speed = 200; this.textContent = 'Vitesse ×5'; }
-  else { speed = 1000; this.textContent = 'Vitesse ×1'; }
-};
+// Speed settings
+let speedLevel = 1;
+let baseDelay = 1000;
 
-function render() {
-  arrayDiv.innerHTML = '';
-  arr.forEach((val, i) => {
-    const bar = document.createElement('div');
-    bar.className = 'bar';
-    bar.textContent = val;
-    bar.id = 'bar' + i;
-    arrayDiv.appendChild(bar);
-  });
-}
-
-function randomArray() {
-  arr = Array.from({length: 10}, () => Math.floor(Math.random() * 90) + 10);
-  render();
-  info.textContent = `Tableau : [${arr.join(', ')}] — Prêt à trier !`;
-}
-
-async function sleep(ms) {
-  await new Promise(r => setTimeout(r, ms / (1000 / speed)));
-}
-
-function highlight(range, cls) {
-  range.forEach(i => {
-    const el = document.getElementById('bar' + i);
-    if (el) el.className = 'bar ' + cls;
-  });
-}
-
-async function merge(low, mid, high) {
-  highlight([...Array(mid-low+1).keys()].map(i => i+low), 'left');
-  highlight([...Array(high-mid).keys()].map(i => i+mid+1), 'right');
-  info.textContent = `Fusion de [\( {low}- \){mid}] et [\( {mid+1}- \){high}]`;
-  await sleep(800);
-
-  let left = arr.slice(low, mid+1);
-  let right = arr.slice(mid+1, high+1);
-  let i = 0, j = 0, k = low;
-
-  while (i < left.length && j < right.length) {
-    document.getElementById('bar' + (low + i)).classList.add('comparing');
-    document.getElementById('bar' + (mid + 1 + j)).classList.add('comparing');
-    await sleep(800);
-
-    if (left[i] <= right[j]) {
-      arr[k++] = left[i++];
-    } else {
-      arr[k++] = right[j++];
-    }
-    render();
-    document.getElementById('bar' + (k-1)).classList.add('merging');
-    await sleep(400);
-  }
-  while (i < left.length) arr[k++] = left[i++];
-  while (j < right.length) arr[k++] = right[j++];
-  render();
-}
-
-async function mergeSort(low = 0, high = arr.length-1) {
-  if (low >= high) return;
-  let mid = Math.floor((low + high) / 2);
-  highlight([...Array(high-low+1).keys()].map(i => i+low), 'left');
-  info.textContent = `Division : [\( {low}- \){high}] → [\( {low}- \){mid}] et [\( {mid+1}- \){high}]`;
-  await sleep(1000);
-  render();
-
-  await mergeSort(low, mid);
-  await mergeSort(mid+1, high);
-  await merge(low, mid, high);
-
-  for (let i = low; i <= high; i++) {
-    document.getElementById('bar' + i).classList.add('sorted');
-  }
-}
-
-document.getElementById('start').onclick = async () => {
-  if (arr.length === 0) return;
-  document.querySelectorAll('button').forEach(b => b.disabled = true);
-  await mergeSort();
-  info.textContent = 'Tri terminé ! Tableau trié avec succès.';
-  document.querySelectorAll('button').forEach(b => b.disabled = false);
-};
-
-document.getElementById('random').onclick = randomArray;
-
-// Initial array
-randomArray();
-</script>
-
-</body>
-  </html>
+speedBtn.onclick = () => {
+    if (speed
