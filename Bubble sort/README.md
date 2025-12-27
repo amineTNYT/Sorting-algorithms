@@ -29,3 +29,4 @@ This version includes several key optimizations over the naive implementation:
 - **Adaptive**: ✅ Yes (faster on partially sorted data)
 
 ## 📝 Code
+[bubble code](https://github.com/amineTNYT/Sorting-algorithms/blob/main/Bubble%20sort/Bubble%20Code.py)
