@@ -1,17 +1,15 @@
-# Benchmark des algorithmes de tri
+# Sorting Algorithms Benchmark
 
-Ce dossier contient un script pour comparer les performances réelles de tous les algorithmes de tri du repository.
+This folder contains a standalone script that compares the **real-world performance** of all sorting algorithms implemented in this repository.
 
-## Comment lancer le benchmark
+The goal: see the actual difference between theoretical time complexity (O(n²), O(n log n), etc.) and practical execution time on random data.
 
-1. Assure-toi d'avoir Python 3 installé.
-2. Installe les dépendances (si besoin) :
-   ```bash
-   pip install matplotlib numpy
-   
-## Comment l'exécuter
-Après avoir cloné le repo :
+## 🚀 How to Run the Benchmark
 
+### Requirements
+- Python 3.6 or higher
+- Only one external library: `matplotlib` (for generating the chart)
+
+Install the dependency with a single command:
 ```bash
-cd Sorting-algorithms
-python benchmark/benchmark.py
+pip install matplotlib
