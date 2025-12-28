@@ -15,7 +15,7 @@ def bubble_sort(arr):
     return arr
 
 def insertion_sort(arr):
-    """Insertion Sort - O(n²) meilleur sur listes presque triées"""
+    """Insertion Sort - O(n²) best for sorted lists,array etc"""
     for i in range(1, len(arr)):
         key = arr[i]
         j = i - 1
@@ -60,7 +60,7 @@ def merge(left, right):
     return result
 
 def quick_sort(arr):
-    """Quick Sort - O(n log n) en moyenne, in-place"""
+    """Quick Sort - O(n log n)  in-place"""
     if len(arr) <= 1:
         return arr
     pivot = arr[len(arr) // 2]
@@ -70,7 +70,7 @@ def quick_sort(arr):
     return quick_sort(left) + middle + quick_sort(right)
 
 def shell_sort(arr):
-    """Shell Sort - amélioration de l'insertion sort"""
+    """Shell Sort - a better  implimantationof insertion sort"""
     n = len(arr)
     gap = n // 2
     while gap > 0:
@@ -100,7 +100,7 @@ algorithms = {
     "Tim Sort (Python built-in)": tim_sort,
 }
 
-# ==================== PARAMÈTRES DU BENCHMARK ====================
+# ==================== PARAMETERS OF THE BENCHMARK ====================
 
 sizes = [100, 500, 1000, 2500, 5000, 10000, 20000]  # augmente jusqu'à 20k pour voir les différences
 repeats = 5  # nombre de runs par taille pour moyenne fiable
@@ -149,7 +149,6 @@ output_path = os.path.join(output_dir, "performance_chart.png")
 
 plt.savefig(output_path)
 plt.close()
-
-print("\n✅ Benchmark terminé !")
-print(f"📊 Graphique sauvegardé ici : {output_path}")
-print("   Ajoute ce graphique à ton README principal pour un impact maximum !")
+print("\n✅ Benchmark completed!")
+print(f"📊 Graph saved here: {output_path}")
+print(" Add this graph to your main README for maximum impact!")
