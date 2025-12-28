@@ -8,3 +8,10 @@ Ce dossier contient un script pour comparer les performances réelles de tous le
 2. Installe les dépendances (si besoin) :
    ```bash
    pip install matplotlib numpy
+   
+## Comment l'exécuter
+Après avoir cloné le repo :
+
+```bash
+cd Sorting-algorithms
+python benchmark/benchmark.py
