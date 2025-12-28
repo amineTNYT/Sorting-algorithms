@@ -19,7 +19,9 @@ This repository provides clear, well-commented Python implementations of the mos
 | Shell Sort      | [Shell sort](./Shell%20sort)         | O(n log² n) or better   | No     | Yes      |
 | Tim Sort        | [Tim sort](./Tim%20sort)             | O(n log n)              | Yes    | No       |
 ## benchmarking
-feel free to benchmark all the diffrent sorting algorithms and experement [benchmark](https://github.com/amineTNYT/Sorting-algorithms/tree/main/benchmark)
+feel free to benchmark all the diffrent sorting algorithms and experement 
+
+[benchmark](https://github.com/amineTNYT/Sorting-algorithms/tree/main/benchmark)
 ## How to Use
 
 1. Clone the repository:
