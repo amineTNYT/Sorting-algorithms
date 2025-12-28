@@ -18,5 +18,5 @@ pip install matplotlib
 ```
 git clone https://github.com/amineTNYT/Sorting-algorithms.git
 cd Sorting-algorithms
-python benchmark/benchmark.py
+py benchmark/benchmark.py
 ```
