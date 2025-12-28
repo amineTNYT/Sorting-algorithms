@@ -9,6 +9,6 @@ def bubbleSort(arr):
         if not swapped:
             break  
 
-arr = [64, 34, 25, 12, 22, 11, 90]
-bubbleSort(arr)
-print(arr)
+my_list = [64, 34, 25, 12, 22, 11, 90]
+bubbleSort(my_list)
+print(my_list)
