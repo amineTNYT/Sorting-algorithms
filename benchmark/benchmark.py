@@ -70,7 +70,7 @@ def quick_sort(arr):
     return quick_sort(left) + middle + quick_sort(right)
 
 def shell_sort(arr):
-    """Shell Sort - a better  implimantationof insertion sort"""
+    """Shell Sort - a better  implimantation of insertion sort"""
     n = len(arr)
     gap = n // 2
     while gap > 0:
