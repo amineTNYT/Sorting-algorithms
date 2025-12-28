@@ -4,6 +4,7 @@ This folder contains a standalone script that compares the **real-world performa
 
 The goal: see the actual difference between theoretical time complexity (O(n²), O(n log n), etc.) and practical execution time on random data.
 
+![Sorting Algorithms Performance Comparison](benchmark/results/performance_chart.png)
 ## 🚀 How to Run the Benchmark
 
 ### Requirements
