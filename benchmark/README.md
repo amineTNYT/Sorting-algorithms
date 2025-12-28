@@ -13,3 +13,10 @@ The goal: see the actual difference between theoretical time complexity (O(n²),
 Install the dependency with a single command:
 ```bash
 pip install matplotlib
+```
+# execution
+```
+git clone https://github.com/amineTNYT/Sorting-algorithms.git
+cd Sorting-algorithms
+python benchmark/benchmark.py
+```
