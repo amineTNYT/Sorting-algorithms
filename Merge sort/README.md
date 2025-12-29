@@ -2,7 +2,7 @@
 
 ## 📋 Overview
 
-This repository contains a clean and efficient implementation of **Merge Sort**, a classic divide-and-conquer sorting algorithm. Developed by John von Neumann in 1945, Merge Sort works by recursively dividing the array into halves, sorting each half, and then merging the sorted halves back together.
+This folder contains a clean and efficient implementation of **Merge Sort**, a classic divide-and-conquer sorting algorithm. Developed by John von Neumann in 1945, Merge Sort works by recursively dividing the array into halves, sorting each half, and then merging the sorted halves back together.
 
 **Key strengths**:
 - Guaranteed O(n log n) time complexity in all cases
