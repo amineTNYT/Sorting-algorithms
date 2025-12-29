@@ -2,7 +2,7 @@
 
 ## 📋 Overview
 
-This repository contains an implementation of Shell Sort, an efficient generalization of Insertion Sort that sorts elements far apart first and progressively reduces the gap between elements being compared. Developed by Donald Shell in 1959, it's one of the oldest non-trivial sorting algorithms that significantly outperforms basic O(n²) algorithms.
+This folder contains an implementation of Shell Sort, an efficient generalization of Insertion Sort that sorts elements far apart first and progressively reduces the gap between elements being compared. Developed by Donald Shell in 1959, it's one of the oldest non-trivial sorting algorithms that significantly outperforms basic O(n²) algorithms.
 
 ## 🔍 How Shell Sort Works
 
@@ -15,7 +15,6 @@ Shell Sort works by breaking the original list into smaller sublists which are t
 3. Reduce the gap and repeat
 4. Continue until gap becomes 1 (standard Insertion Sort on the nearly sorted array)
 
-<grok:render card_id="dfb3b3,0a2d5b,5db050" card_type="image_card_group" type="render_card"></grok:render>
 
 ## 📊 Time Complexity
 
