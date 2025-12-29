@@ -5,7 +5,7 @@ All sorting algorithms in Python explained with code and interactive visualizati
 This repository provides clear, well-commented Python implementations of the most common sorting algorithms. Each algorithm has its own dedicated folder containing:
 
 - A Python script with the complete implementation and detailed step-by-step comments.
-- An HTML file (`index.html`) that visually demonstrates how the algorithm works (using simple animations, step-by-step illustrations, or interactive elements powered by HTML/CSS/JavaScript).
+- An HTML file [index.html](index.html) that visually demonstrates how the algorithm works (using simple animations, step-by-step illustrations, or interactive elements powered by HTML/CSS/JavaScript).
 
 ## List of Sorting Algorithms
 
