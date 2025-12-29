@@ -2,7 +2,8 @@
 
 # Function to sort array using insertion sort
 def insertionSort(arr):
-    for i in range(1, len(arr)):
+    n=len(arr)
+    for i in range(1, n):
         key = arr[i]
         j = i - 1
 
@@ -16,7 +17,8 @@ def insertionSort(arr):
 
 # A utility function to print array of size n
 def printArray(arr):
-    for i in range(len(arr)):
+    n=len(arr)
+    for i in range(n):
         print(arr[i], end=" ")
     print()
 
