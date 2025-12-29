@@ -18,10 +18,28 @@ This repository provides clear, well-commented Python implementations of the mos
 | Quick Sort      | [Quick sort](./Quick%20sort)         | O(n²)                   | No     | Yes      |
 | Shell Sort      | [Shell sort](./Shell%20sort)         | O(n log² n) or better   | No     | Yes      |
 | Tim Sort        | [Tim sort](./Tim%20sort)             | O(n log n)              | Yes    | No       |
-## benchmarking
-feel free to benchmark all the diffrent sorting algorithms and experement 
 
-[benchmark](https://github.com/amineTNYT/Sorting-algorithms/tree/main/benchmark)
+## 📊 Benchmarking
+
+Feel free to benchmark and experiment with the different sorting algorithms provided in this repository.
+
+The `benchmark` folder contains scripts for comparing algorithm performance on various input sizes and data distributions.
+
+👉 [Go to the benchmark folder](https://github.com/amineTNYT/Sorting-algorithms/tree/main/benchmark)
+
+## 📈 Time & Space Complexity (Quick Guide)
+
+**Time Complexity** describes how the running time of an algorithm grows as the input size (**n**) increases.
+
+- **Best Case**: The most favorable input (e.g. already sorted data)
+- **Average Case**: Typical or random input
+- **Worst Case**: The most unfavorable input
+
+**Space Complexity** describes how much additional memory an algorithm uses beyond the input data.
+
+These concepts help compare algorithms and choose the most suitable one based on performance and memory constraints.
+
+
 ## How to Use
 
 1. Clone the repository:
