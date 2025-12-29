@@ -1,5 +1,4 @@
 # Python program for implementation of Selection
-# Sort
 
 def selection_sort(arr):
     n = len(arr)
