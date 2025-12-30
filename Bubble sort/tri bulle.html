@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tri à Bulles - Animation Éducative</title>
+<title>Bubble Sort - Educational Animation</title>
 <style>
     * {
         margin: 0;
@@ -24,7 +24,7 @@
         margin: 0 auto;
     }
 
-    h1 { 
+    h1 {
         text-align: center;
         color: #1a1a1a;
         margin-bottom: 30px;
@@ -358,13 +358,13 @@
 <body>
 
 <div class="container">
-    <h1>Tri à Bulles (Bubble Sort)</h1>
+    <h1>Bubble Sort</h1>
 
     <div class="control-panel">
         <div class="buttons">
-            <button id="startBtn">Démarrer l'Animation</button>
-            <button id="generateBtn">Générer Nouvel Exemple</button>
-            <button id="speedBtn">Vitesse: Lent (×1)</button>
+            <button id="startBtn">Start Animation</button>
+            <button id="generateBtn">Generate New Example</button>
+            <button id="speedBtn">Speed: Slow (×1)</button>
         </div>
     </div>
 
@@ -372,25 +372,25 @@
         <div class="array-container" id="arrayContainer"></div>
     </div>
 
-    <div id="steps">Cliquez sur le bouton pour commencer l'animation.</div>
+    <div id="steps">Click the button to start the animation.</div>
 
     <div class="status-panel">
-        <h3>État de l'Animation</h3>
+        <h3>Animation Status</h3>
         <div class="status-info">
             <div class="info-item">
-                <div class="info-label">Passage</div>
+                <div class="info-label">Pass</div>
                 <div class="info-value" id="passNum">0</div>
             </div>
             <div class="info-item">
-                <div class="info-label">Comparaisons</div>
+                <div class="info-label">Comparisons</div>
                 <div class="info-value" id="comparisons">0</div>
             </div>
             <div class="info-item">
-                <div class="info-label">Échanges</div>
+                <div class="info-label">Swaps</div>
                 <div class="info-value" id="swaps">0</div>
             </div>
             <div class="info-item">
-                <div class="info-label">Permut</div>
+                <div class="info-label">Swap Flag</div>
                 <div class="info-value" id="permutStatus">-</div>
             </div>
         </div>
@@ -398,64 +398,64 @@
 
     <div class="code-section">
         <div class="code-block">
-            <h3>📋 Algorithme</h3>
-            <pre><span class="keyword">procédure</span> <span class="function">tri_bulle</span> (<span class="operator">@</span> T:tab ; n:entier)
-<span class="keyword">Début</span>
-    <span class="keyword">Répéter</span>
-        permut <span class="operator">←</span> <span class="keyword">Faux</span>
-        <span class="keyword">Pour</span> i <span class="keyword">de</span> <span class="number">0</span> <span class="keyword">à</span> n<span class="operator">-</span><span class="number">2</span> <span class="keyword">faire</span>
-            <span class="keyword">Si</span> T[i] <span class="operator">></span> T[i<span class="operator">+</span><span class="number">1</span>] <span class="keyword">alors</span>
+            <h3>📋 Algorithm</h3>
+            <pre><span class="keyword">procedure</span> <span class="function">bubble_sort</span> (<span class="operator">@</span> T:array ; n:integer)
+<span class="keyword">Begin</span>
+    <span class="keyword">Repeat</span>
+        swapped <span class="operator">←</span> <span class="keyword">False</span>
+        <span class="keyword">For</span> i <span class="keyword">from</span> <span class="number">0</span> <span class="keyword">to</span> n<span class="operator">-</span><span class="number">2</span> <span class="keyword">do</span>
+            <span class="keyword">If</span> T[i] <span class="operator">></span> T[i<span class="operator">+</span><span class="number">1</span>] <span class="keyword">then</span>
                 aux <span class="operator">←</span> T[i]
                 T[i] <span class="operator">←</span> T[i<span class="operator">+</span><span class="number">1</span>]
                 T[i<span class="operator">+</span><span class="number">1</span>] <span class="operator">←</span> aux
-                permut <span class="operator">←</span> <span class="keyword">Vrai</span>
-            <span class="keyword">Fin si</span>
-        <span class="keyword">Fin pour</span>
-    <span class="keyword">Jusqu'à</span> (permut <span class="operator">=</span> <span class="keyword">Faux</span>)
-<span class="keyword">Fin</span></pre>
+                swapped <span class="operator">←</span> <span class="keyword">True</span>
+            <span class="keyword">End if</span>
+        <span class="keyword">End for</span>
+    <span class="keyword">Until</span> (swapped <span class="operator">=</span> <span class="keyword">False</span>)
+<span class="keyword">End</span></pre>
         </div>
 
         <div class="code-block">
-            <h3>🐍 Implémentation Python</h3>
-            <pre><span class="keyword">def</span> <span class="function">tri_bulle</span>(t, n):
-    permut <span class="operator">=</span> <span class="keyword">True</span>
-    <span class="keyword">while</span> permut <span class="operator">==</span> <span class="keyword">True</span>:
-        permut <span class="operator">=</span> <span class="keyword">False</span>
+            <h3>🐍 Python Implementation</h3>
+            <pre><span class="keyword">def</span> <span class="function">bubble_sort</span>(t, n):
+    swapped <span class="operator">=</span> <span class="keyword">True</span>
+    <span class="keyword">while</span> swapped <span class="operator">==</span> <span class="keyword">True</span>:
+        swapped <span class="operator">=</span> <span class="keyword">False</span>
         <span class="keyword">for</span> i <span class="keyword">in</span> <span class="function">range</span>(n<span class="operator">-</span><span class="number">1</span>):
             <span class="keyword">if</span> t[i] <span class="operator">></span> t[i<span class="operator">+</span><span class="number">1</span>]:
                 aux <span class="operator">=</span> t[i]
                 t[i] <span class="operator">=</span> t[i<span class="operator">+</span><span class="number">1</span>]
                 t[i<span class="operator">+</span><span class="number">1</span>] <span class="operator">=</span> aux
-                permut <span class="operator">=</span> <span class="keyword">True</span>
+                swapped <span class="operator">=</span> <span class="keyword">True</span>
 
-<span class="comment"># Exemple d'utilisation</span>
+<span class="comment"># Usage example</span>
 t <span class="operator">=</span> [<span class="number">5</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">4</span>]
-<span class="function">tri_bulle</span>(t, <span class="number">5</span>)
+<span class="function">bubble_sort</span>(t, <span class="number">5</span>)
 <span class="function">print</span>(t)  <span class="comment"># [1, 3, 4, 5, 8]</span></pre>
         </div>
     </div>
 
     <div class="tdol-table">
-        <h3>📊 Tableau TDOL (Types et Déclarations)</h3>
+        <h3>📊 TDOL Table (Types and Declarations)</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Objet</th>
+                    <th>Object</th>
                     <th>Nature / Type</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>i</strong></td>
-                    <td>Entier</td>
+                    <td>Integer</td>
                 </tr>
                 <tr>
                     <td><strong>aux</strong></td>
-                    <td>Entier</td>
+                    <td>Integer</td>
                 </tr>
                 <tr>
-                    <td><strong>permut</strong></td>
-                    <td>Booléen</td>
+                    <td><strong>swapped</strong></td>
+                    <td>Boolean</td>
                 </tr>
             </tbody>
         </table>
@@ -463,7 +463,7 @@ t <span class="operator">=</span> [<span class="number">5</span>, <span class="n
 </div>
 
 <div class="watermark">
-    Créé par <strong>Amine</strong> | GitHub: <a href="https://github.com/AmineTNYT" target="_blank">@AmineTNYT</a>
+    Created by <strong>Amine</strong> | GitHub: <a href="https://github.com/AmineTNYT" target="_blank">@AmineTNYT</a>
 </div>
 
 <script>
@@ -487,11 +487,11 @@ let baseDelay = 1000;
 
 speedBtn.onclick = () => {
     if (speedLevel === 1) {
-        speedLevel = 2; baseDelay = 500; speedBtn.textContent = "Vitesse: Normal (×2)";
+        speedLevel = 2; baseDelay = 500; speedBtn.textContent = "Speed: Normal (×2)";
     } else if (speedLevel === 2) {
-        speedLevel = 4; baseDelay = 250; speedBtn.textContent = "Vitesse: Rapide (×4)";
+        speedLevel = 4; baseDelay = 250; speedBtn.textContent = "Speed: Fast (×4)";
     } else {
-        speedLevel = 1; baseDelay = 1000; speedBtn.textContent = "Vitesse: Lent (×1)";
+        speedLevel = 1; baseDelay = 1000; speedBtn.textContent = "Speed: Slow (×1)";
     }
 };
 
@@ -504,7 +504,7 @@ function initializeSimpleExample() {
     currentExample = 'simple';
     renderArray();
     resetStats();
-    stepsDiv.innerHTML = "Exemple simple avec 5 éléments : [5, 3, 8, 1, 4]<br>Cliquez sur 'Démarrer l'Animation' pour voir le tri en action.";
+    stepsDiv.innerHTML = "Simple example with 5 elements: [5, 3, 8, 1, 4]<br>Click 'Start Animation' to see the sorting in action.";
 }
 
 function generateRandomArray() {
@@ -513,7 +513,7 @@ function generateRandomArray() {
     currentExample = 'random';
     renderArray();
     resetStats();
-    stepsDiv.innerHTML = `Nouvel exemple avec ${length} éléments : [${arr.join(', ')}]<br>Cliquez sur 'Démarrer l'Animation' pour voir le tri.`;
+    stepsDiv.innerHTML = `New example with ${length} elements: [${arr.join(', ')}]<br>Click 'Start Animation' to see the sort.`;
 }
 
 function renderArray() {
@@ -546,14 +546,14 @@ async function bubbleSortAnimation() {
     isAnimating = true;
     startBtn.disabled = true;
     generateBtn.disabled = true;
-    startBtn.textContent = 'Animation en cours...';
+    startBtn.textContent = 'Animation in progress...';
 
     const n = arr.length;
     let totalComparisons = 0;
     let totalSwaps = 0;
     let pass = 0;
 
-    stepsDiv.innerHTML = "<strong>Tableau initial non trié</strong>";
+    stepsDiv.innerHTML = "<strong>Initial unsorted array</strong>";
     await sleep(3000);
 
     let swapped;
@@ -561,10 +561,10 @@ async function bubbleSortAnimation() {
         pass++;
         swapped = false;
         passNum.textContent = pass;
-        permutStatus.textContent = 'Faux';
+        permutStatus.textContent = 'False';
         permutStatus.style.color = '#ef4444';
 
-        stepsDiv.innerHTML = `<strong>Passage ${pass}</strong> : Initialisation permut = Faux<br>Début du parcours du tableau`;
+        stepsDiv.innerHTML = `<strong>Pass ${pass}</strong>: Initialize swapped = False<br>Start traversing the array`;
         await sleep(3000);
 
         for (let i = 0; i < n - 1; i++) {
@@ -581,7 +581,7 @@ async function bubbleSortAnimation() {
             arrow.textContent = '↓';
             document.getElementById(`elem${i}`).appendChild(arrow);
 
-            stepsDiv.innerHTML = `<strong>Passage ${pass}</strong> : Comparaison des éléments à la position ${i} et ${i+1}<br>${arr[i]} > ${arr[i+1]} ?`;
+            stepsDiv.innerHTML = `<strong>Pass ${pass}</strong>: Comparing elements at position ${i} and ${i+1}<br>${arr[i]} > ${arr[i+1]} ?`;
             await sleep(3000);
 
             if (arr[i] > arr[i + 1]) {
@@ -590,7 +590,7 @@ async function bubbleSortAnimation() {
                 updateElement(i, 'swapping');
                 updateElement(i + 1, 'swapping');
                 
-                stepsDiv.innerHTML = `<strong>Passage ${pass}</strong> : Échange nécessaire !<br>${arr[i]} > ${arr[i+1]} → Échange requis<br><br>aux ← t[${i}] (${arr[i]})<br>t[${i}] ← t[${i+1}] (${arr[i+1]})<br>t[${i+1}] ← aux<br>permut ← Vrai`;
+                stepsDiv.innerHTML = `<strong>Pass ${pass}</strong>: Swap needed!<br>${arr[i]} > ${arr[i+1]} → Swap required<br><br>aux ← t[${i}] (${arr[i]})<br>t[${i}] ← t[${i+1}] (${arr[i+1]})<br>t[${i+1}] ← aux<br>swapped ← True`;
                 await sleep(4000);
 
                 // Perform swap
@@ -605,7 +605,7 @@ async function bubbleSortAnimation() {
                 totalSwaps++;
                 swaps.textContent = totalSwaps;
                 swapped = true;
-                permutStatus.textContent = 'Vrai';
+                permutStatus.textContent = 'True';
                 permutStatus.style.color = '#10b981';
 
                 await sleep(2000);
@@ -616,7 +616,7 @@ async function bubbleSortAnimation() {
             } else {
                 // No swap needed
                 document.getElementById(`elem${i}`).removeChild(arrow);
-                stepsDiv.innerHTML += `<br>→ Non, pas d'échange nécessaire`;
+                stepsDiv.innerHTML += `<br>→ No, no swap needed`;
                 await sleep(1600);
             }
 
@@ -626,7 +626,7 @@ async function bubbleSortAnimation() {
             
             if (i === n - 2 && !swapped) {
                 // Last comparison, no swap happened
-                stepsDiv.innerHTML += `<br><br>Aucun échange pendant ce passage → Le tableau est trié !`;
+                stepsDiv.innerHTML += `<br><br>No swaps during this pass → The array is sorted!`;
             }
         }
 
@@ -649,12 +649,12 @@ async function bubbleSortAnimation() {
         await sleep(400);
     }
 
-    stepsDiv.innerHTML = `<strong>Tri terminé !</strong> Le tableau est complètement trié.<br><br>Résumé : ${pass} passages, ${totalComparisons} comparaisons, ${totalSwaps} échanges`;
+    stepsDiv.innerHTML = `<strong>Sorting complete!</strong> The array is fully sorted.<br><br>Summary: ${pass} passes, ${totalComparisons} comparisons, ${totalSwaps} swaps`;
 
     isAnimating = false;
     startBtn.disabled = false;
     generateBtn.disabled = false;
-    startBtn.textContent = 'Démarrer l\'Animation';
+    startBtn.textContent = 'Start Animation';
 }
 
 generateBtn.onclick = generateRandomArray;
