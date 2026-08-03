@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bucket Sort - Interactive Visualization</title>
+<meta name="description" content="Scatters values into ordered buckets by their position in the range, sorts each small bucket, then concatenates them.">
+<link rel="stylesheet" href="../assets/visualizer.css">
+<script>
+    // Apply the saved theme before first paint, so the page never flashes
+    // the wrong one on load.
+    try {
+        var savedTheme = localStorage.getItem('sorting-algorithms-theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+    } catch (error) { /* storage unavailable - fall back to the OS preference */ }
+</script>
+</head>
+<body>
+
+<div class="container">
+
+    <header class="page-header">
+        <div>
+            <h1>Bucket Sort</h1>
+            <p class="subtitle">Scatters values into ordered buckets by their position in the range, sorts each small bucket, then concatenates them.</p>
+        </div>
+        <div class="header-actions">
+            <a class="back-link" href="../index.html">All algorithms</a>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+                </svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="panel">
+        <div class="buttons">
+            <button id="startBtn" type="button">Start Animation</button>
+            <button id="generateBtn" type="button">Generate New Example</button>
+            <button id="speedBtn" type="button">Speed: Slow (x1)</button>
+        </div>
+    </div>
+
+    <div class="array-display">
+        <div class="array-container" id="arrayContainer"></div>
+        <div class="aux-panel" id="auxPanel">
+            <div class="aux-title" id="auxTitle"></div>
+            <div class="aux-row" id="auxRow"></div>
+        </div>
+    </div>
+
+    <div class="steps" id="steps" role="status" aria-live="polite"></div>
+
+    <div class="panel">
+        <h2>Animation State</h2>
+        <div class="status-info">
+            <div class="info-item">
+                <div class="info-label">Buckets</div>
+                <div class="info-value" id="buckets">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Comparisons</div>
+                <div class="info-value" id="comparisons">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Writes</div>
+                <div class="info-value" id="writes">0</div>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-swatch" style="background:linear-gradient(135deg,#fbbf24,#d97706)"></span>Being placed in a bucket
+            </div>
+            <div class="legend-item">
+                <span class="legend-swatch" style="background:linear-gradient(135deg,#ef4444,#dc2626)"></span>Writing back
+            </div>
+            <div class="legend-item">
+                <span class="legend-swatch" style="background:linear-gradient(135deg,#10b981,#059669)"></span>Final position
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        Created by <strong>Amine</strong> &middot;
+        <a href="https://github.com/amineTNYT" target="_blank" rel="noopener">@amineTNYT</a>
+        &middot; <a href="./README.md">Notes on this algorithm</a>
+    </footer>
+
+</div>
+
+<script src="../assets/visualizer.js"></script>
+<script>
+SortingVisualizer.create({
+    defaultExample: [29, 25, 3, 49, 9, 37, 21, 43],
+    randomLength: 8,
+    randomMin: 1,
+    randomMax: 60,
+    stats: [{ id: 'buckets' }, { id: 'comparisons' }, { id: 'writes' }],
+    run: async function (ctx) {
+        var n = ctx.length;
+        var minVal = Math.min.apply(null, ctx.arr);
+        var maxVal = Math.max.apply(null, ctx.arr);
+
+        if (minVal === maxVal) {
+            ctx.say('Every value is identical, so there is nothing to reorder.');
+            await ctx.sleep(1200);
+            return;
+        }
+
+        var bucketCount = n;
+        var span = maxVal - minVal;
+        var buckets = [];
+        for (var b = 0; b < bucketCount; b++) buckets.push([]);
+
+        ctx.stat('buckets', bucketCount);
+
+        function showBuckets(activeIndex) {
+            var cells = [];
+            for (var b = 0; b < bucketCount; b++) {
+                cells.push({
+                    key: 'bucket ' + b,
+                    val: buckets[b].length ? buckets[b].join(', ') : '-',
+                    highlight: b === activeIndex
+                });
+            }
+            ctx.aux('Buckets, each covering an equal slice of the value range', cells);
+        }
+
+        ctx.say('<strong>Step 1 - scatter.</strong> Send each value to a bucket based on where ' +
+                'it falls between ' + minVal + ' and ' + maxVal + '.');
+        showBuckets(null);
+        await ctx.sleep(1800);
+
+        for (var i = 0; i < n; i++) {
+            var value = ctx.arr[i];
+            var index = Math.floor((value - minVal) * (bucketCount - 1) / span);
+            buckets[index].push(value);
+
+            ctx.setClass(i, 'comparing');
+            showBuckets(index);
+            ctx.say(value + ' lands in <strong>bucket ' + index + '</strong>.');
+            await ctx.sleep(850);
+            ctx.setClass(i, 'default');
+        }
+
+        ctx.say('<strong>Step 2 - sort each bucket.</strong> Buckets are small, so a simple ' +
+                'insertion sort is ideal here.');
+        await ctx.sleep(1700);
+
+        for (var b = 0; b < bucketCount; b++) {
+            if (buckets[b].length < 2) continue;
+
+            var bucket = buckets[b];
+            for (var x = 1; x < bucket.length; x++) {
+                var key = bucket[x];
+                var y = x - 1;
+                while (y >= 0 && bucket[y] > key) {
+                    ctx.bump('comparisons');
+                    bucket[y + 1] = bucket[y];
+                    y--;
+                }
+                bucket[y + 1] = key;
+            }
+
+            showBuckets(b);
+            ctx.say('Bucket ' + b + ' sorted &rarr; [' + bucket.join(', ') + '].');
+            await ctx.sleep(1000);
+        }
+
+        ctx.say('<strong>Step 3 - gather.</strong> The buckets are already in order relative to ' +
+                'each other, so simply reading them out in sequence finishes the sort.');
+        await ctx.sleep(1700);
+
+        var writeIndex = 0;
+        for (var g = 0; g < bucketCount; g++) {
+            if (!buckets[g].length) continue;
+            showBuckets(g);
+
+            for (var k = 0; k < buckets[g].length; k++) {
+                ctx.setValue(writeIndex, buckets[g][k]);
+                ctx.setClass(writeIndex, 'active');
+                ctx.bump('writes');
+                await ctx.sleep(600);
+                ctx.setClass(writeIndex, 'sorted');
+                writeIndex++;
+            }
+        }
+
+        ctx.hideAux();
+    }
+});
+</script>
+
+</body>
+</html>

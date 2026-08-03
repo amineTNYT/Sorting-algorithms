@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shell Sort - Interactive Visualization</title>
+<meta name="description" content="Runs insertion sort over elements a gap apart, halving the gap each round until a final pass with gap 1 finishes the job.">
+<link rel="stylesheet" href="../assets/visualizer.css">
+<script>
+    // Apply the saved theme before first paint, so the page never flashes
+    // the wrong one on load.
+    try {
+        var savedTheme = localStorage.getItem('sorting-algorithms-theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+    } catch (error) { /* storage unavailable - fall back to the OS preference */ }
+</script>
+</head>
+<body>
+
+<div class="container">
+
+    <header class="page-header">
+        <div>
+            <h1>Shell Sort</h1>
+            <p class="subtitle">Runs insertion sort over elements a gap apart, halving the gap each round until a final pass with gap 1 finishes the job.</p>
+        </div>
+        <div class="header-actions">
+            <a class="back-link" href="../index.html">All algorithms</a>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+                </svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="panel">
+        <div class="buttons">
+            <button id="startBtn" type="button">Start Animation</button>
+            <button id="generateBtn" type="button">Generate New Example</button>
+            <button id="speedBtn" type="button">Speed: Slow (x1)</button>
+        </div>
+    </div>
+
+    <div class="array-display">
+        <div class="array-container" id="arrayContainer"></div>
+        <div class="aux-panel" id="auxPanel">
+            <div class="aux-title" id="auxTitle"></div>
+            <div class="aux-row" id="auxRow"></div>
+        </div>
+    </div>
+
+    <div class="steps" id="steps" role="status" aria-live="polite"></div>
+
+    <div class="panel">
+        <h2>Animation State</h2>
+        <div class="status-info">
+            <div class="info-item">
+                <div class="info-label">Current gap</div>
+                <div class="info-value" id="gap">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Comparisons</div>
+                <div class="info-value" id="comparisons">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Shifts</div>
+                <div class="info-value" id="shifts">0</div>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-swatch" style="background:linear-gradient(135deg,#3b82f6,#2563eb)"></span>Current gap group
+            </div>
+            <div class="legend-item">
+                <span class="legend-swatch" style="background:linear-gradient(135deg,#ef4444,#dc2626)"></span>Element being placed
+            </div>
+            <div class="legend-item">
+                <span class="legend-swatch" style="background:linear-gradient(135deg,#fbbf24,#d97706)"></span>Comparing
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        Created by <strong>Amine</strong> &middot;
+        <a href="https://github.com/amineTNYT" target="_blank" rel="noopener">@amineTNYT</a>
+        &middot; <a href="./README.md">Notes on this algorithm</a>
+    </footer>
+
+</div>
+
+<script src="../assets/visualizer.js"></script>
+<script>
+SortingVisualizer.create({
+    defaultExample: [9, 4, 7, 1, 8, 3, 6, 2],
+    randomLength: 8,
+    stats: [{ id: 'gap' }, { id: 'comparisons' }, { id: 'shifts' }],
+    run: async function (ctx) {
+        var n = ctx.length;
+        var gap = Math.floor(n / 2);
+
+        while (gap > 0) {
+            ctx.stat('gap', gap);
+            ctx.setAll('default');
+            ctx.say('<strong>Gap ' + gap + '</strong>: sort elements that sit ' + gap +
+                    ' position' + (gap === 1 ? '' : 's') + ' apart.');
+            await ctx.sleep(1400);
+
+            for (var i = gap; i < n; i++) {
+                var temp = ctx.arr[i];
+
+                // Show which elements form this gap group
+                ctx.setAll('default');
+                for (var g = i % gap; g < n; g += gap) ctx.setClass(g, 'left-half');
+                ctx.setClass(i, 'active');
+                ctx.tag(i, 'placing');
+                ctx.say('Place ' + temp + ' correctly within its gap group.');
+                await ctx.sleep(1000);
+
+                var j = i;
+                while (j >= gap) {
+                    ctx.bump('comparisons');
+                    ctx.setClass(j - gap, 'comparing');
+                    ctx.say('Is ' + ctx.arr[j - gap] + ' &gt; ' + temp + ' ?');
+                    await ctx.sleep(850);
+
+                    if (ctx.arr[j - gap] > temp) {
+                        ctx.setValue(j, ctx.arr[j - gap]);
+                        ctx.bump('shifts');
+                        ctx.say('Yes &rarr; shift ' + ctx.arr[j] + ' right by ' + gap + '.');
+                        ctx.setClass(j - gap, 'left-half');
+                        await ctx.sleep(800);
+                        j -= gap;
+                    } else {
+                        ctx.setClass(j - gap, 'left-half');
+                        await ctx.sleep(450);
+                        break;
+                    }
+                }
+
+                ctx.setValue(j, temp);
+                ctx.clearTags();
+                await ctx.sleep(600);
+            }
+
+            gap = Math.floor(gap / 2);
+        }
+    }
+});
+</script>
+
+</body>
+</html>
