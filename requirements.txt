@@ -1,0 +1,5 @@
+# The sorting algorithms themselves use only the standard library.
+# These dependencies are for the benchmark and the test suite.
+
+matplotlib>=3.5    # benchmark/benchmark.py - performance chart
+pytest>=7.0        # tests/ - correctness suite
