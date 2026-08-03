@@ -1,36 +1,404 @@
-#this page is not completed
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sorting algorithms</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorting Algorithms - Python Implementations &amp; Visualizations</title>
+<meta name="description" content="Eleven classic sorting algorithms in Python, each with commented code, complexity notes and an interactive animation.">
+<link rel="stylesheet" href="./assets/visualizer.css">
+<link rel="stylesheet" href="./assets/home.css">
+<script>
+    // Apply the saved theme before first paint, so the page never flashes
+    // the wrong one on load.
+    try {
+        var savedTheme = localStorage.getItem('sorting-algorithms-theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+    } catch (error) { /* storage unavailable - fall back to the OS preference */ }
+</script>
 </head>
 <body>
-  <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f0f0f0;
-        color: #222;
-        padding: 20px;
-        padding-bottom: 100px;
-    }
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-      h1{font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f0f0f0;
-        color: #222;
-        }
+<div class="container">
 
-      <div class="container">
-    <h1>Tri à Bulles (Bubble Sort)</h1>
+    <header class="hero">
+        <div class="hero-top">
+            <div>
+                <h1>Sorting Algorithms</h1>
+                <p class="tagline">
+                    Eleven classic sorting algorithms implemented in Python, each with
+                    step-by-step commentary, complexity notes and an interactive
+                    animation you can step through at your own pace.
+                </p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+                </svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+                </svg>
+            </button>
+        </div>
+        <div class="hero-links">
+            <a href="https://github.com/amineTNYT/Sorting-algorithms">View on GitHub</a>
+            <a class="secondary" href="./benchmark/">Run the benchmark</a>
+        </div>
+    </header>
+
+    <section>
+        <h2>The Algorithms</h2>
+        <p class="section-note">
+            Every algorithm has a runnable Python file, written notes and its own
+            animation. The stripe on each card marks the worst-case class: amber for
+            quadratic, blue for log-linear, green for the linear-time non-comparison
+            sorts.
+        </p>
+
+        <div class="card-grid">
+
+            <article class="card tier-quadratic">
+                <h3>Bubble Sort</h3>
+                <div class="complexity">O(n&sup2;) worst &middot; O(n) best</div>
+                <p>
+                    Repeatedly swaps adjacent elements that are out of order. The
+                    early-exit flag makes it genuinely fast on sorted input.
+                </p>
+                <div class="traits">
+                    <span class="trait yes">Stable</span>
+                    <span class="trait yes">In-place</span>
+                    <span class="trait yes">Adaptive</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Bubble%20sort/">Notes</a>
+                    <a href="./Bubble%20sort/bubble_sort.py">Code</a>
+                    <a class="viz" href="./Bubble%20sort/bubble_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-quadratic">
+                <h3>Insertion Sort</h3>
+                <div class="complexity">O(n&sup2;) worst &middot; O(n) best</div>
+                <p>
+                    Grows a sorted prefix one element at a time. Excellent on small
+                    or nearly sorted data, and the basis of several hybrid sorts.
+                </p>
+                <div class="traits">
+                    <span class="trait yes">Stable</span>
+                    <span class="trait yes">In-place</span>
+                    <span class="trait yes">Adaptive</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Insertion%20sort/">Notes</a>
+                    <a href="./Insertion%20sort/insertion_sort.py">Code</a>
+                    <a class="viz" href="./Insertion%20sort/insertion_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-quadratic">
+                <h3>Selection Sort</h3>
+                <div class="complexity">O(n&sup2;) always</div>
+                <p>
+                    Finds the smallest remaining element and swaps it into place.
+                    Makes the fewest writes of any quadratic sort: exactly n&minus;1.
+                </p>
+                <div class="traits">
+                    <span class="trait no">Not stable</span>
+                    <span class="trait yes">In-place</span>
+                    <span class="trait no">Not adaptive</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Selection%20sort/">Notes</a>
+                    <a href="./Selection%20sort/selection_sort.py">Code</a>
+                    <a class="viz" href="./Selection%20sort/selection_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-loglinear">
+                <h3>Shell Sort</h3>
+                <div class="complexity">O(n&sup2;) worst &middot; gap-dependent</div>
+                <p>
+                    Insertion sort over progressively smaller gaps, so distant
+                    elements move a long way early. Performance hinges entirely on
+                    the gap sequence.
+                </p>
+                <div class="traits">
+                    <span class="trait no">Not stable</span>
+                    <span class="trait yes">In-place</span>
+                    <span class="trait yes">Adaptive</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Shell%20sort/">Notes</a>
+                    <a href="./Shell%20sort/shell_sort.py">Code</a>
+                    <a class="viz" href="./Shell%20sort/shell_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-loglinear">
+                <h3>Merge Sort</h3>
+                <div class="complexity">O(n log n) always</div>
+                <p>
+                    Splits the array in half, sorts each side, then merges. Its
+                    running time never degrades, which is why it is the safe choice
+                    for worst-case guarantees.
+                </p>
+                <div class="traits">
+                    <span class="trait yes">Stable</span>
+                    <span class="trait no">Not in-place</span>
+                    <span class="trait no">Not adaptive</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Merge%20sort/">Notes</a>
+                    <a href="./Merge%20sort/merge_sort.py">Code</a>
+                    <a class="viz" href="./Merge%20sort/merge_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-loglinear">
+                <h3>Quick Sort</h3>
+                <div class="complexity">O(n log n) average &middot; O(n&sup2;) worst</div>
+                <p>
+                    Partitions around a randomly chosen pivot and recurses. Usually
+                    the fastest comparison sort in practice thanks to its tight
+                    inner loop and cache behaviour.
+                </p>
+                <div class="traits">
+                    <span class="trait no">Not stable</span>
+                    <span class="trait yes">In-place</span>
+                    <span class="trait no">Not adaptive</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Quick%20sort/">Notes</a>
+                    <a href="./Quick%20sort/quick_sort.py">Code</a>
+                    <a class="viz" href="./Quick%20sort/quick_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-loglinear">
+                <h3>Heap Sort</h3>
+                <div class="complexity">O(n log n) always</div>
+                <p>
+                    Builds a max-heap, then repeatedly moves the root to the end.
+                    Merge Sort's worst-case guarantee with Quick Sort's O(1) memory.
+                </p>
+                <div class="traits">
+                    <span class="trait no">Not stable</span>
+                    <span class="trait yes">In-place</span>
+                    <span class="trait no">Not adaptive</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Heap%20sort/">Notes</a>
+                    <a href="./Heap%20sort/heap_sort.py">Code</a>
+                    <a class="viz" href="./Heap%20sort/heap_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-loglinear">
+                <h3>Tim Sort</h3>
+                <div class="complexity">O(n log n) worst &middot; O(n) best</div>
+                <p>
+                    Finds naturally ordered runs and merges them, falling back to
+                    insertion sort on short ones. This is the algorithm behind
+                    Python's own sorted().
+                </p>
+                <div class="traits">
+                    <span class="trait yes">Stable</span>
+                    <span class="trait no">Not in-place</span>
+                    <span class="trait yes">Adaptive</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Tim%20sort/">Notes</a>
+                    <a href="./Tim%20sort/tim_sort.py">Code</a>
+                    <a class="viz" href="./Tim%20sort/tim_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-linear">
+                <h3>Counting Sort</h3>
+                <div class="complexity">O(n + k) &middot; integers only</div>
+                <p>
+                    Tallies how often each value occurs instead of comparing
+                    elements, which is how it beats the O(n log n) barrier. Needs a
+                    narrow value range.
+                </p>
+                <div class="traits">
+                    <span class="trait yes">Stable</span>
+                    <span class="trait no">Not in-place</span>
+                    <span class="trait no">Not comparison-based</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Counting%20sort/">Notes</a>
+                    <a href="./Counting%20sort/counting_sort.py">Code</a>
+                    <a class="viz" href="./Counting%20sort/counting_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-linear">
+                <h3>Radix Sort</h3>
+                <div class="complexity">O(d &times; (n + b)) &middot; integers only</div>
+                <p>
+                    Runs a stable counting sort on one digit at a time, least
+                    significant first. Earlier passes survive later ones precisely
+                    because each pass is stable.
+                </p>
+                <div class="traits">
+                    <span class="trait yes">Stable</span>
+                    <span class="trait no">Not in-place</span>
+                    <span class="trait no">Not comparison-based</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Radix%20sort/">Notes</a>
+                    <a href="./Radix%20sort/radix_sort.py">Code</a>
+                    <a class="viz" href="./Radix%20sort/radix_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+            <article class="card tier-linear">
+                <h3>Bucket Sort</h3>
+                <div class="complexity">O(n + k) average &middot; O(n&sup2;) worst</div>
+                <p>
+                    Scatters values into ordered buckets, sorts each one, then
+                    concatenates. Fast on evenly spread data, poor on skewed data.
+                </p>
+                <div class="traits">
+                    <span class="trait yes">Stable</span>
+                    <span class="trait no">Not in-place</span>
+                    <span class="trait yes">Distribution sort</span>
+                </div>
+                <div class="card-links">
+                    <a href="./Bucket%20sort/">Notes</a>
+                    <a href="./Bucket%20sort/bucket_sort.py">Code</a>
+                    <a class="viz" href="./Bucket%20sort/bucket_sort.html">Visualize &rarr;</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <section>
+        <h2>At a Glance</h2>
+        <p class="section-note">
+            Worst-case figures reflect the implementation in this repository. Where
+            an algorithm's complexity depends on a parameter, that parameter is
+            named: <code>k</code> is the value range, <code>d</code> the digit
+            count, <code>b</code> the numeric base.
+        </p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Best</th>
+                        <th>Average</th>
+                        <th>Worst</th>
+                        <th>Space</th>
+                        <th>Stable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bubble Sort</td>
+                        <td><code>O(n)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(1)</code></td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Insertion Sort</td>
+                        <td><code>O(n)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(1)</code></td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Selection Sort</td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(1)</code></td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Shell Sort</td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n^1.5)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(1)</code></td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Merge Sort</td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n)</code></td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Quick Sort</td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(log n)</code></td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Heap Sort</td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(1)</code></td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Tim Sort</td>
+                        <td><code>O(n)</code></td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n log n)</code></td>
+                        <td><code>O(n)</code></td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Counting Sort</td>
+                        <td><code>O(n + k)</code></td>
+                        <td><code>O(n + k)</code></td>
+                        <td><code>O(n + k)</code></td>
+                        <td><code>O(n + k)</code></td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Radix Sort</td>
+                        <td><code>O(d(n + b))</code></td>
+                        <td><code>O(d(n + b))</code></td>
+                        <td><code>O(d(n + b))</code></td>
+                        <td><code>O(n + b)</code></td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Bucket Sort</td>
+                        <td><code>O(n + k)</code></td>
+                        <td><code>O(n + k)</code></td>
+                        <td><code>O(n&sup2;)</code></td>
+                        <td><code>O(n + k)</code></td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+        Created by <strong>Amine</strong> &middot;
+        <a href="https://github.com/amineTNYT" target="_blank" rel="noopener">@amineTNYT</a>
+        &middot; MIT Licensed
+    </footer>
+
+</div>
+
+<script src="./assets/visualizer.js"></script>
+
 </body>
 </html>
